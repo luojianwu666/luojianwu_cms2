@@ -74,4 +74,51 @@ public interface ArticleService {
 	 * @throws
 	 */
 	List<Category> getCateListByChannelId(Integer channelId);
+	/**
+	 * @Title: delByIds   
+	 * @Description: 批量删除   
+	 * @param: @param ids
+	 * @param: @return      
+	 * @return: boolean      
+	 * @throws
+	 */
+	boolean delByIds(String ids);
+	/**
+	 * @Title: isAllCheck   
+	 * @Description: 根据Ids判断文章是否已审核   
+	 * @param: @param ids
+	 * @param: @return      
+	 * @return: boolean      
+	 * @throws
+	 */
+	boolean isAllCheck(String ids);
+	/**
+	 * @Title: getListByChannelId   
+	 * @Description: 根据频道Id查询文章列表   
+	 * @param: @param channelId
+	 * @param: @return      
+	 * @return: List<Article>      
+	 * @throws
+	 */
+	List<Article> getListByChannelId(Integer channelId, Integer id, int num);
+	/**
+	 * @Title: getHotList   
+	 * @Description: 热点文章   
+	 * @param: @param pageNum
+	 * @param: @return      
+	 * @return: PageInfo<Article>      
+	 * @throws
+	 */
+	PageInfo<Article> getHotList(int pageNum);
+	/**
+	 * @Title: getListByChannelIdAndCateId   
+	 * @Description: 根据频道Id和分类Id查询文章列表  
+	 * @param: @param channelId
+	 * @param: @param cateId
+	 * @param: @param pageNo
+	 * @param: @return      
+	 * @return: PageInfo<Article>      
+	 * @throws
+	 */
+	PageInfo<Article> getListByChannelIdAndCateId(Integer channelId, Integer cateId, Integer pageNo);
 }

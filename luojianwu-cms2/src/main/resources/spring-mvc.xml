@@ -22,13 +22,26 @@
 	<!-- 不拦截静态资源 -->
 	<mvc:default-servlet-handler />
 	<!-- mvc注解驱动 -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven conversion-service="conversionService"/>
+	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+           <property name="converters">
+               <set>
+                   <bean class="com.luojianwu.cms.common.StringToDateConverter"></bean>
+               </set>
+           </property>
+    </bean>
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/admin1/**"/>
+			<mvc:mapping path="/admin/**"/>
 			<mvc:exclude-mapping path="/admin/"/>
 			<mvc:exclude-mapping path="/admin/user/login"/>
-			<bean class="com.luojianwu.cms.common.AuthInterceptor"></bean>
+			<bean class="com.luojianwu.cms.common.AuthAdminInterceptor"></bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/**"/>
+			<mvc:exclude-mapping path="/user/login"/>
+			<mvc:exclude-mapping path="/user/register"/>
+			<bean class="com.luojianwu.cms.common.AuthUserInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
 	

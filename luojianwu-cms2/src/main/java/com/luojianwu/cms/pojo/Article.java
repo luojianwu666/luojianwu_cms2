@@ -21,8 +21,26 @@ public class Article implements Serializable{
     private Integer categoryId;
     
     private String channelName;
+    
+    private String nickname;
 
-    private String categoryName;
+    public String getNickname() {
+		return nickname;
+	}
+
+
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	private String categoryName;
 
     private Integer userId;
 
@@ -42,6 +60,9 @@ public class Article implements Serializable{
 
     private String content;
     
+    private String statusIds;
+    
+    
     @Override
 	public String toString() {
 		return "Article [id=" + id + ", title=" + title + ", picture=" + picture + ", channelId=" + channelId
@@ -49,6 +70,18 @@ public class Article implements Serializable{
 				+ status + ", deleted=" + deleted + ", created=" + created + ", updated=" + updated + ", commentcnt="
 				+ commentcnt + ", content=" + content + "]";
 	}
+
+    
+    
+	public String getStatusIds() {
+		return statusIds;
+	}
+
+	public void setStatusIds(String statusIds) {
+		this.statusIds = statusIds;
+	}
+
+
 
 	public Integer getId() {
         return id;

@@ -32,7 +32,7 @@
 	<div class="form-group row">
 		<label for="inputEmail3" class="col-sm-2 col-form-label">文章标题</label>
 		<div class="col-sm-6">
-			<input type="text" name="title" class="form-control" placeholder="请输入标题">
+			<input type="text" name="title" value="${article.title }" class="form-control" placeholder="请输入标题">
 		</div>
 	</div>
 	<div class="form-group row">
@@ -50,9 +50,9 @@
 		<label for="inputEmail3" class="col-sm-2 col-form-label">所属频道</label>
 		<div class="col-sm-6">
 			<select id="channelId" name="channelId" onchange="changeCate();" class="form-control">
-		        <option selected>请选择频道...</option>
+		        <option value="">请选择频道...</option>
 		        <c:forEach items="${channelList }" var="item">
-		        	<option value="${item.id }">${item.name }</option>
+		        	<option value="${item.id }" <c:if test="${article.channelId==item.id }">selected</c:if>>${item.name }</option>
 		        </c:forEach>
 		      </select>
 		</div>
@@ -61,7 +61,10 @@
 		<label for="inputEmail3" class="col-sm-2 col-form-label">所属分类</label>
 		<div class="col-sm-6">
 			<select id="categoryId" name="categoryId" class="form-control">
-		        <option selected>请选择分类...</option>
+		        <option value="">请选择分类...</option>
+		        <c:forEach items="${cateList }" var="item">
+			       <option value="${item.id }" <c:if test="${article.categoryId==item.id }">selected</c:if>>${item.name }</option>
+		        </c:forEach>
 		    </select>
 		</div>
 	</div>
@@ -71,6 +74,8 @@
 			<textarea name="content1" cols="100" rows="8" style="width:760px;height:200px;visibility:hidden;">${article.content}</textarea>
 		</div>
 	</div>
+	<input type="hidden" id="status" name="status" value="2">
+	<input type="hidden" id="id" name="id" value="${article.id }">
 	<div class="form-group row">
 		<div class="col-sm-10">
 			<button type="button" class="btn btn-primary" onclick="save();">保存</button>
@@ -78,34 +83,75 @@
 		</div>
 	</div>
 </form>
+	<div class="alert alert-danger" role="alert" style="display: none"></div>
 <script type="text/javascript">
+	console.log('${article.channelId}');
+	//$("#channelId").val('${article.channelId}');
 	function changeCate() {
 		var channelId = $("#channelId").val();
-		$("#categoryId").html('<option selected>请选择分类...</option>');
+		$("#categoryId").html('<option value="">请选择分类...</option>');
 		$.get("/article/getCateList",{channelId:channelId},function(res){
 			for (var i = 0; i < res.data.length; i++) {
-				$("#categoryId").append('<option value="'+res.data[i].id+'" selected>'+res.data[i].name+'</option>');
+				$("#categoryId").append('<option value="'+res.data[i].id+'">'+res.data[i].name+'</option>');
 			}
 		})
 	}
-
+	
 	function save(){
+		//封装form表单
 		var formData = new FormData($("#articleForm")[0]);
 		formData.set("content",editor.html());
-		console.log(formData.get("content"));
-		console.log(editor.html());
-		/* $.post("/article/add",formData,function(res){
-			console.log(res);
-		}); */
+		//验证表单
+		if(formData.get("title")==""){
+			$(".alert").html("标题不能为空");
+			$(".alert").show();
+			return;
+		}
+		if(formData.get("picture")==""){
+			$(".alert").html("请上传图片");
+			$(".alert").show();
+			return;
+		}
+		if(formData.get("channelId")==""){
+			$(".alert").html("请选择频道");
+			$(".alert").show();
+			return;
+		}
+		if(formData.get("categoryId")==""){
+			$(".alert").html("请选择类别");
+			$(".alert").show();
+			return;
+		}
+		if(formData.get("content")==""){
+			$(".alert").html("请添加文章内容");
+			$(".alert").show();
+			return;
+		}
 		$.ajax({
 			type:"post",
 			data:formData,
 			processData:false,
 			contentType:false,
-			url:"/admin/user/locked",
-			sucess:function(res){
+			url:"/article/add",
+			success:function(res){
 				console.log(res);
+				if(res){
+					$(".alert").html("发布成功");
+					$(".alert").show();
+					selectedMenu("/user/article");
+				}else if(res.errorCode==10000){
+					$(".alert").html("登录过期");
+					window.location.href="/user/login";
+				}else{
+					$(".alert").html("保存失败");
+					$(".alert").show();
+				}
 			}
 		});
+	}
+	
+	function saveAndCheck(){
+		$("#status").val("0");
+		save();
 	}
 </script>

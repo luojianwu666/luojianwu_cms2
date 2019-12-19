@@ -74,4 +74,42 @@ public class ArticleServiceImpl implements ArticleService {
 		return categoryDao.selectListByChannelId(channelId);
 	}
 
+	@Override
+	public boolean delByIds(String ids) {
+		return articleDao.updateDeletedByIds(ids)>0;
+	}
+
+	@Override
+	public boolean isAllCheck(String ids) {
+		List<Article> articleList = articleDao.selectByIds(ids);
+		for (Article article:articleList) {
+			if(article.getStatus()==1) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public List<Article> getListByChannelId(Integer channelId, Integer aritcleId, int num) {
+		return articleDao.selectListByChannelId(channelId,aritcleId,num);
+	}
+
+	@Override
+	public PageInfo<Article> getHotList(int pageNum) {
+		PageHelper.startPage(pageNum, 1);
+		List<Article> articleList = articleDao.selectByHot();
+		
+		return new PageInfo<>(articleList);
+	}
+
+	@Override
+	public PageInfo<Article> getListByChannelIdAndCateId(Integer channelId, Integer cateId, Integer pageNum) {
+		PageHelper.startPage(pageNum, 1);
+		List<Article> articleList = articleDao.selectListByChannelIdAndCateId(channelId,cateId);
+		 return new PageInfo<>(articleList);
+	}
+
+	
+
 }

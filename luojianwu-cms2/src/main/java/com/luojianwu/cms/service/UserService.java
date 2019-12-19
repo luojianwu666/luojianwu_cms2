@@ -62,6 +62,10 @@ public interface UserService {
 	 */
 	PageInfo<User> getPageInfo(User user, int pageNum,
 			int pageSize);
+	boolean update(User user);
+	boolean isExist(String username);
+	User getById(Integer userId);
+	
 	
 	
 }
