@@ -8,7 +8,7 @@
 				username like '%${user.username}%'
 			</if>
 			<if test="user.nickname!=null and user.nickname!=''">
-				nickname like '%${user.nickname}%'
+				and nickname like '%${user.nickname}%'
 			</if>
 		</where>
 	</select>
@@ -51,7 +51,8 @@
 	      birthday = #{user.birthday},
 	      gender = #{user.gender},
 	      url = #{user.url},
-	      update_time = #{user.updateTime}
+	      update_time = #{user.updateTime},
+	       headimg = #{user.headimg}
 	    where id = #{user.id}
 	</update>
 	

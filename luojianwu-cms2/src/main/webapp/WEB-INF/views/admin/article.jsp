@@ -4,7 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
   	<form class="form-inline" id="queryForm">
 	  <div class="form-group mx-sm-3 mb-2">
-	    <input type="text" name="name" class="form-control" placeholder="请输入文章标题">
+	    <input type="text" name="title" class="form-control" placeholder="请输入文章标题">
 	  </div>
 	  <div class="form-group mx-sm-3 mb-2">
 	     <select id="inputState" class="form-control" id="channelId" name="channelId">
