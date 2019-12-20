@@ -14,8 +14,22 @@ public class User implements Serializable{
     private String username;
 
     private String password;
+    
+    private String headimg;
 
-    private String nickname;
+    public String getHeadimg() {
+		return headimg;
+	}
+
+	public void setHeadimg(String headimg) {
+		this.headimg = headimg;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	private String nickname;
 
     private Date birthday;
 

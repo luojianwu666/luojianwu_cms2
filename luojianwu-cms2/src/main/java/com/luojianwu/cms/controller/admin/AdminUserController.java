@@ -32,9 +32,9 @@ public class AdminUserController {
 	@ResponseBody
 	public Object login(User user,HttpSession session) {
 		//判断用户名和密码
-		/*if(StringUtil.isNull(user.getUsername()) || StringUtil.isNull(user.getPassword())) {
+		if(StringUtil.isBlank(user.getUsername()) || StringUtil.isBlank(user.getPassword())) {
 			return JsonResult.fail(1000, "用户名和密码不能为空");
-		}*/
+		}
 		//查询用户
 		User userInfo = userService.getByUsername(user.getUsername());
 		//用户为空
