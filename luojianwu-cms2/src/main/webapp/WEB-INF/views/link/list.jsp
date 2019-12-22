@@ -1,49 +1,53 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
       	<form class="form-inline" id="queryForm">
 	  <div class="form-group mx-sm-3 mb-2">
-	    <input type="text" name="content" class="form-control" placeholder="请输入文章标题">
+	    <input type="text" name="text" class="form-control" placeholder="请输入文章标题">
 	  </div>
 	  <input type="hidden" name="pageNum" value="${pageInfo.pageNum }">
 	  <button type="button" class="btn btn-primary mb-2" onclick="query()">查询</button>
 	</form>
-  	<table class="table">
+    
+    
+<table class="table">
+
   <thead>
     <tr>
-    <th><input type="checkbox" id="chkAll"></th>
+     <th><input type="checkbox" id="chkAll"></th>
       <th scope="col">编号</th>
-      <th scope="col">文章标题</th>
-      <th scope="col">评论内容</th>
-      <th scope="col">评论时间</th>
-      <th scope="col">
+      <th scope="col">文本</th>
+      <th scope="col">路径</th>
+      <th scope="col">时间</th>
+       <th scope="col"> <button type="button" class="btn btn-primary" onclick="add()">添加</button>|
         <button type="button" class="btn btn-primary" onclick="deleteAll()">批删</button>
        </th>
     </tr>
   </thead>
   <tbody>
-  <c:forEach items="${list }" var="list" >
-   <tr>
-    <th><input type="checkbox" value="${list.id }" name="chk_list"></th>
+  <c:forEach items="${list }" var="list">
+      <tr>
+        <th><input type="checkbox" value="${list.id }" name="chk_list"></th>
       <th scope="row">${list.id }</th>
-      <td>${list.title }</td>
-      <td>${list.content }</td>
+      <td>${list.text }</td>
+      <td>${list.url }</td>
       <td>${list.created }</td>
-      <td><button type="button" class="btn btn-primary" onclick="update(${list.id})">修改</button>|
-      <button type="button" class="btn btn-primary" onclick="deleteOne(${list.id})">删除</button></td>
+      <td>
+      <button type="button" class="btn btn-primary" onclick="update(${list.id})">修改</button>|
+      <button type="button" class="btn btn-primary" onclick="deleteOne(${list.id})">删除</button>
+      </td>
     </tr>
-  
   </c:forEach>
+
     <tr>
-    <td colspan="5">
+    <td colspan="4">
     <jsp:include page="../common/page.jsp"></jsp:include>
     
     </td>
     </tr>
-  
   </tbody>
 </table>
-	<!-- 提示框 -->
+<!-- 提示框 -->
 <div class="alert alert-danger" role="alert" style="display: none"></div>
 <!-- 删除确认框 -->
 <div class="modal" tabindex="-1" role="dialog" id="delModal">
@@ -64,8 +68,7 @@
       </div>
     </div>
   </div>
-</div>			
-<script type="text/javascript" src="/public/js/bootstrap.min.js"></script>
+</div>
 <script src="/public/js/checkbox.js"></script>
 
 <script src="/public/js/checkbox.js"></script>
@@ -88,9 +91,11 @@ function deleteOne(id){
 	}
 	$('#delModal').modal('show')
 }
-
+function add(){
+	openPage("link/edit");
+}
 function update(id){
-	openPage("comment/user/edit?id="+id);
+	openPage("link/edit?id="+id);
 }
  function deleteAll(){
 	 var ids = getCheckboxIds();
@@ -105,7 +110,7 @@ function update(id){
 	function batchDel(){
 		var ids = getCheckboxIds();
 	
-		$.post("comment/user/delByIds",{ids:ids},function(res){
+		$.post("link/delByIds",{ids:ids},function(res){
 			$('#delModal').modal('hide')
 			reload();
 		})

@@ -14,14 +14,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bawei.luojianwu.StringUtil;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.luojianwu.cms.common.CmsConstant;
 import com.luojianwu.cms.common.CmsMd5Util;
 import com.luojianwu.cms.common.JsonResult;
 import com.luojianwu.cms.pojo.Article;
 import com.luojianwu.cms.pojo.Channel;
+import com.luojianwu.cms.pojo.Comment;
+import com.luojianwu.cms.pojo.Links;
 import com.luojianwu.cms.pojo.User;
 import com.luojianwu.cms.service.ArticleService;
+import com.luojianwu.cms.service.CommentService;
 import com.luojianwu.cms.service.UserService;
 
 @Controller
@@ -32,6 +36,9 @@ public class UserController {
 	
 	@Autowired
 	private ArticleService articleService;
+	
+	@Autowired
+	private CommentService commentService;
 	
 	/**
 	 * @Title: login   
@@ -73,6 +80,8 @@ public class UserController {
 		String string2md5 = CmsMd5Util.string2MD5(user.getPassword());
 		if(string2md5.equals(userInfo.getPassword())) {
 			session.setAttribute(CmsConstant.UserSessionKey, userInfo);
+			session.setAttribute("user", userInfo);
+		
 			return JsonResult.sucess();
 		}
 		return JsonResult.fail(500, "未知错误");
@@ -168,13 +177,28 @@ public class UserController {
 			//跟新session中的用户信息
 			User userInfo = userService.getById(user.getId());
 			session.setAttribute(CmsConstant.UserSessionKey, userInfo);
+			System.out.println(session.getAttribute("USER_SESSION_ID")+"99999999999999999");
 			return JsonResult.sucess();
 		}
 		return JsonResult.fail(100002, "修改失败");
 	}
 	
 	@RequestMapping("comment")
-	public String comment(HttpServletResponse response,HttpSession session) {
+	public String comment(HttpServletResponse response,HttpSession session,@RequestParam(value="pageNum",defaultValue="1") int pageNum,
+			@RequestParam(value="pageSize",defaultValue="3") int pageSize,Model m,String mohu
+			
+			) {
+		User user = (User) session.getAttribute("user");
+		PageHelper.startPage(pageNum, pageSize);
+		List<Comment> list=commentService.list(user,mohu);
+		PageInfo pageInfo = new PageInfo(list);
+		m.addAttribute("list", list);
+		m.addAttribute("pageInfo", pageInfo);
+		for (Comment comment : list) {
+			System.out.println(comment);
+		}
+		
+		
 		return "user/comment";
 	}
 	
@@ -192,9 +216,36 @@ public class UserController {
 		return "user/article";
 	}
 	
+	@RequestMapping("comment/user/edit")
+	public Object edit(
+		Integer id,Model m
+			) {
+		if(id!=null) {
+			Comment link=commentService.edit(id);
+			m.addAttribute("link", link);
+		}
+		
+		
+		
+		return "user/edit";
+	}
 	
+	@ResponseBody
+	@RequestMapping("comment/user/delByIds")
+	public Object deleteData(String ids) {
+		boolean flag=commentService.deleteData(ids);
+		
+		return flag;
+	}
 	
-	
+	@ResponseBody
+	@RequestMapping("comment/user/save")
+	public Object save(Comment comment) {
+		
+		boolean flag=commentService.save(comment);
+		
+		return flag;
+	}
 	
 	
 }

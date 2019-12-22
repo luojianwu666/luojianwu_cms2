@@ -20,10 +20,18 @@ public class Comment  implements Serializable{
     
     private String headimg;
     private String nickname;
-    
+    private String title;
     
 
-    public String getNickname() {
+    public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getNickname() {
 		return nickname;
 	}
 
@@ -43,10 +51,40 @@ public class Comment  implements Serializable{
 		return serialVersionUID;
 	}
 
+
+
+	public Comment(Integer id, Integer articleid, Integer userid, String content, String created, String headimg,
+			String nickname, String title) {
+		super();
+		this.id = id;
+		this.articleid = articleid;
+		this.userid = userid;
+		this.content = content;
+		this.created = created;
+		this.headimg = headimg;
+		this.nickname = nickname;
+		this.title = title;
+	}
+	
+
+	public Comment() {
+		super();
+	}
+
+	public Comment(Integer id, Integer articleid, Integer userid, String content, String created, String title) {
+		super();
+		this.id = id;
+		this.articleid = articleid;
+		this.userid = userid;
+		this.content = content;
+		this.created = created;
+		this.title = title;
+	}
+
 	@Override
 	public String toString() {
 		return "Comment [id=" + id + ", articleid=" + articleid + ", userid=" + userid + ", content=" + content
-				+ ", created=" + created + "]";
+				+ ", created=" + created + ", headimg=" + headimg + ", nickname=" + nickname + ", title=" + title + "]";
 	}
 
 	public Integer getId() {

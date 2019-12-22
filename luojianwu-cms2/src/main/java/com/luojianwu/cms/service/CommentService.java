@@ -11,6 +11,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.luojianwu.cms.dao.CommentDao;
 import com.luojianwu.cms.pojo.Comment;
+import com.luojianwu.cms.pojo.Links;
+import com.luojianwu.cms.pojo.User;
 
 @Service
 public class CommentService {
@@ -45,4 +47,22 @@ public class CommentService {
 		List<Comment> commentList = commentDao.select(comment);
 		return new PageInfo<>(commentList);
 	}
+	public  List<Comment> list(User user, String mohu) {
+		// TODO Auto-generated method stub
+		System.out.println(user+"//////////////////////");
+		return commentDao.query(user,mohu);
+	}
+	public boolean deleteData(String ids) {
+		// TODO Auto-generated method stub
+		return commentDao.deleteData(ids);
+	}
+	public Comment edit(Integer id) {
+		// TODO Auto-generated method stub
+		return commentDao.edit(id);
+	}
+	public boolean save(Comment comment) {
+		// TODO Auto-generated method stub
+		return commentDao.save(comment);
+	}
+	
 }

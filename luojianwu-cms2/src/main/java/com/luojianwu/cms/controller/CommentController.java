@@ -14,6 +14,7 @@ import com.github.pagehelper.PageInfo;
 import com.luojianwu.cms.common.CmsConstant;
 import com.luojianwu.cms.common.JsonResult;
 import com.luojianwu.cms.pojo.Comment;
+import com.luojianwu.cms.pojo.Links;
 import com.luojianwu.cms.pojo.User;
 import com.luojianwu.cms.service.CommentService;
 
@@ -61,4 +62,28 @@ public class CommentController {
 		model.addAttribute("pageInfo", pageInfo);
 		return "comment/list";
 	}
+	
+	@RequestMapping("user/edit")
+	public Object edit(
+		Integer id,Model m
+			) {
+		if(id!=null) {
+			Comment link=commentService.edit(id);
+			m.addAttribute("link", link);
+		}
+		
+		
+		
+		return "user/edit";
+	}
+	
+	@ResponseBody
+	@RequestMapping("user/delByIds")
+	public Object deleteData(String ids) {
+		boolean flag=commentService.deleteData(ids);
+		
+		return flag;
+	}
+	
+
 }

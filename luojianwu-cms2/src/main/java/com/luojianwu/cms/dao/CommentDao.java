@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.luojianwu.cms.pojo.Comment;
+import com.luojianwu.cms.pojo.Links;
+import com.luojianwu.cms.pojo.User;
 
 public interface CommentDao {
 	/**
@@ -70,4 +72,10 @@ public interface CommentDao {
 	 * @throws
 	 */
 	int deleteByIds(@Param("ids") String ids);
+	List<Comment> query(@Param("user")User user,@Param("mohu")String mohu);
+	boolean deleteData(String ids);
+	Comment edit(Integer id);
+	boolean save(@Param("comment")Comment comment);
+	
+	
 }

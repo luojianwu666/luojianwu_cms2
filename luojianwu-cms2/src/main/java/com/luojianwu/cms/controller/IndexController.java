@@ -12,9 +12,11 @@ import com.github.pagehelper.PageInfo;
 import com.luojianwu.cms.pojo.Article;
 import com.luojianwu.cms.pojo.Category;
 import com.luojianwu.cms.pojo.Channel;
+import com.luojianwu.cms.pojo.Links;
 import com.luojianwu.cms.pojo.Slide;
 import com.luojianwu.cms.pojo.User;
 import com.luojianwu.cms.service.ArticleService;
+import com.luojianwu.cms.service.LinkService;
 import com.luojianwu.cms.service.SlideService;
 import com.luojianwu.cms.service.UserService;
 
@@ -27,7 +29,9 @@ public class IndexController {
 	private UserService userService;
 	@Autowired
 	private SlideService slideService;
-
+	@Autowired
+	private LinkService linkService;
+	
 	
 	@RequestMapping(value="/")
 	public String index(Model model) {
@@ -51,6 +55,9 @@ public class IndexController {
 		}
 		PageInfo<Article> pageInfo =  articleService.getHotList(pageNum);
 		model.addAttribute("pageInfo", pageInfo);
+		List<Links> linkList=linkService.showlist();
+		
+		model.addAttribute("linkList", linkList);
 		return "index";
 	}
 	
@@ -66,6 +73,8 @@ public class IndexController {
 		model.addAttribute("cateList", cateList);
 		PageInfo<Article> pageInfo =  articleService.getListByChannelIdAndCateId(channelId,cateId,pageNo);
 		model.addAttribute("pageInfo", pageInfo);
+		
+		
 		return "index";
 	}
 	
