@@ -16,8 +16,20 @@ public class User implements Serializable{
     private String password;
     
     private String headimg;
+    
+    private String isMima;
+    
+    
 
-    public String getHeadimg() {
+    public String getIsMima() {
+		return isMima;
+	}
+
+	public void setIsMima(String isMima) {
+		this.isMima = isMima;
+	}
+
+	public String getHeadimg() {
 		return headimg;
 	}
 

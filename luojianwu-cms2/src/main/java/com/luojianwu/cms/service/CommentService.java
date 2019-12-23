@@ -50,6 +50,7 @@ public class CommentService {
 	public  List<Comment> list(User user, String mohu) {
 		// TODO Auto-generated method stub
 		System.out.println(user+"//////////////////////");
+		System.out.println(mohu+"///////");
 		return commentDao.query(user,mohu);
 	}
 	public boolean deleteData(String ids) {

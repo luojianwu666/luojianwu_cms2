@@ -137,5 +137,13 @@ public interface ArticleDao {
 	 * @throws
 	 */
 	List<Article> selectNewList(@Param("num") int num);
-	
+	/**
+	 * @Title: addTousu   
+	 * @Description: 投诉+1   
+	 * @param: @param id
+	 * @param: @return      
+	 * @return: int      
+	 * @throws
+	 */
+	int addTousu(Integer id);
 }

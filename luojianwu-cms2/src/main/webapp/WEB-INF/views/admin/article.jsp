@@ -39,6 +39,7 @@
       <th scope="col">标题</th>
       <th scope="col">所属频道</th>
       <th scope="col">所属分类</th>
+      <th scope="col">投诉数量</th>
       <th scope="col">是否热点</th>
       <th scope="col">审核状态</th>
       <th scope="col">发布时间</th>
@@ -53,6 +54,7 @@
 	      <td title="${item.title }">${fn:substring(item.title,0,10) }</td>
 	      <td>${item.channelName }</td>
 	      <td>${item.categoryName }</td>
+	      <td>${item.tousuCnt }</td>
 	      <td>${item.hot>0?"是":"否"}</td>
 	      <td>${item.status==1?"已审核":item.status==0?"未审核":"审核未通过"}</td>
 	      <td><fmt:formatDate value="${item.created }" pattern="yyyy-MM-dd HH:mm"/></td>
@@ -60,6 +62,9 @@
 	      	<button type="button" class="btn btn-primary" onclick="check('${item.id}')">审核</button>
 	      	<button type="button" class="btn btn-primary" onclick="addHot('${item.id}')">加热</button>
 	      	<button type="button" class="btn btn-primary" onclick="view('${item.id}')">查看</button>
+	      	<c:if test="${item.tousuCnt>50 }">
+	      	<button type="button" class="btn btn-primary" onclick="jinKan('${item.id}')">禁看</button>
+	      	</c:if>
 	      </td>
 	    </tr>
    	</c:forEach>
@@ -142,6 +147,14 @@
 	
 	function view(id){
 		window.open("/article/"+id+".html");
+	}
+	function jinKan(id){
+		$.post("/admin/article/update/status",{id:id,status:3},function(res){
+			$('#checkModal').modal('hide');
+			$('.alert').html("已禁止查看");
+			$('.alert').show();
+			query();
+		});
 	}
 	
 </script>

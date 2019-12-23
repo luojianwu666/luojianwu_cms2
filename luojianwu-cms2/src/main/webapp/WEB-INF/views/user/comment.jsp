@@ -3,7 +3,7 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
       	<form class="form-inline" id="queryForm">
 	  <div class="form-group mx-sm-3 mb-2">
-	    <input type="text" name="content" class="form-control" placeholder="请输入文章标题">
+	    <input type="text" name="mohu" class="form-control" placeholder="请输入文章标题">
 	  </div>
 	  <input type="hidden" name="pageNum" value="${pageInfo.pageNum }">
 	  <button type="button" class="btn btn-primary mb-2" onclick="query()">查询</button>

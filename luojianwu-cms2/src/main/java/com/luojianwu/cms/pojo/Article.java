@@ -23,8 +23,24 @@ public class Article implements Serializable{
     private String channelName;
     
     private String nickname;
+    
+    private int tousuCnt;
+    
+    
 
-    public String getNickname() {
+    public int getTousuCnt() {
+		return tousuCnt;
+	}
+
+
+
+	public void setTousuCnt(int tousuCnt) {
+		this.tousuCnt = tousuCnt;
+	}
+
+
+
+	public String getNickname() {
 		return nickname;
 	}
 

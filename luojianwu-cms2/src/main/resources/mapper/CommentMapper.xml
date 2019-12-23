@@ -9,6 +9,32 @@
 		</if>
 		order by created desc
 	</select>
+	<select id="query" resultType="Comment">
+	select cms_comment.*,cms_article.title from cms_comment left join cms_article on cms_comment.articleId=cms_article.id where cms_comment.userId=#{user.id}
+	
+	<if test="mohu!=null and mohu!=''">
+			and cms_comment.content like '%${mohu}%'
+		</if>
+
+	
+	</select>
+	<delete id="deleteDate">
+
+delete from cms_comment where id in (${ids})
+
+</delete>
+<select id="edit" resultType="Comment">
+select cms_comment.*,cms_article.title from cms_comment left join cms_article on cms_comment.articleId=cms_article.id where cms_comment.id=#{id}
+
+
+
+</select>
+<update id="save">
+UPDATE `cms_comment` SET  `content`=#{comment.content} WHERE (`id`=#{comment.id})
+
+
+</update>
+
 	
 	<select id="selectById" resultType="Comment">
 		select * from cms_comment where id=#{id}

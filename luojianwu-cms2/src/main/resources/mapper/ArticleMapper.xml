@@ -24,6 +24,13 @@
 		order by updated desc
 	</select>
 	
+		<update id="addTousu">
+		update cms_article
+	    set 
+	      tousuCnt = tousuCnt+1
+	    where id = #{id}
+	</update>
+	
 	<select id="selectByHot" resultType="Article">
 		select article.*,article.channel_id channelId,article.user_id userId,article.category_id categoryId,user.nickname
 		from cms_article article,cms_user user

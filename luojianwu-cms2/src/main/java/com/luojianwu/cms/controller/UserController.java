@@ -18,6 +18,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.luojianwu.cms.common.CmsConstant;
 import com.luojianwu.cms.common.CmsMd5Util;
+import com.luojianwu.cms.common.CookieUtil;
 import com.luojianwu.cms.common.JsonResult;
 import com.luojianwu.cms.pojo.Article;
 import com.luojianwu.cms.pojo.Channel;
@@ -63,7 +64,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="login",method=RequestMethod.POST)
 	@ResponseBody
-	public Object login(User user,HttpSession session) {
+	public Object login(User user,HttpSession session,HttpServletResponse response) {
 		System.out.println(user+"////////////////////");
 		
 		//判断用户名和密码
@@ -76,12 +77,19 @@ public class UserController {
 		if(userInfo==null) {
 			return JsonResult.fail(1000, "用户名或密码错误");
 		}
+		if(userInfo.getLocked()==1) {
+			return JsonResult.fail(1000, "用户禁用");
+		}
 		//判断密码
 		String string2md5 = CmsMd5Util.string2MD5(user.getPassword());
 		if(string2md5.equals(userInfo.getPassword())) {
 			session.setAttribute(CmsConstant.UserSessionKey, userInfo);
 			session.setAttribute("user", userInfo);
-		
+			//记住密码
+			if("1".equals(user.getIsMima())) {
+				int maxAge = 1000*60*60*24;
+				CookieUtil.addCookie(response, "username", user.getUsername(), null, null, maxAge);
+			}
 			return JsonResult.sucess();
 		}
 		return JsonResult.fail(500, "未知错误");
@@ -247,5 +255,23 @@ public class UserController {
 		return flag;
 	}
 	
-	
+	/**
+
+	 * @Title: isLogin   
+
+	 * @Description: 验证用户是否登录   
+
+	 * @param: @param session
+	 * @param: @return      
+	 * @return: Object      
+	 * @throws
+	 */
+	@RequestMapping(value="isLogin",method=RequestMethod.POST)
+	public @ResponseBody Object isLogin(HttpSession session) {
+		Object userInfo = session.getAttribute(CmsConstant.UserSessionKey);
+		if(userInfo!=null) {
+			return JsonResult.sucess();
+		}
+		return JsonResult.fail(CmsConstant.unLoginErrorCode, "未登录");
+	}
 }
