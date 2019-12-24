@@ -25,7 +25,7 @@ public class AuthUserInterceptor implements HandlerInterceptor{
 				UserService userService = SpringBeanUtils.getBean(UserService.class);
 				userInfo = userService.getByUsername(username);
 				request.getSession().setAttribute(CmsConstant.UserSessionKey, userInfo);
-				 response.sendRedirect("/");
+				// response.sendRedirect("/");
 				return true;
 			}
 		    response.sendRedirect("/user/login");

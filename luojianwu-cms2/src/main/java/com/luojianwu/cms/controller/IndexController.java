@@ -2,13 +2,21 @@ package com.luojianwu.cms.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.bawei.luojianwu.StringUtil;
 import com.github.pagehelper.PageInfo;
+import com.luojianwu.cms.common.CmsConstant;
+import com.luojianwu.cms.common.CookieUtil;
+import com.luojianwu.cms.common.SpringBeanUtils;
 import com.luojianwu.cms.pojo.Article;
 import com.luojianwu.cms.pojo.Category;
 import com.luojianwu.cms.pojo.Channel;
@@ -34,7 +42,9 @@ public class IndexController {
 	
 	
 	@RequestMapping(value="/")
-	public String index(Model model) {
+	public String index(Model model,HttpServletRequest request, HttpServletResponse response, Object handler) {
+		
+	
 		return index(1, model);
 	}
 	
