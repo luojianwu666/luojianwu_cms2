@@ -2,10 +2,12 @@ package com.luojianwu.cms.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -85,11 +87,7 @@ public class UserController {
 		if(string2md5.equals(userInfo.getPassword())) {
 			session.setAttribute(CmsConstant.UserSessionKey, userInfo);
 			session.setAttribute("user", userInfo);
-			//记住密码
-			if("1".equals(user.getIsMima())) {
-				int maxAge = 1000*60*60*24;
-				CookieUtil.addCookie(response, "username", user.getUsername(), null, null, maxAge);
-			}
+		
 			return JsonResult.sucess();
 		}
 		return JsonResult.fail(500, "未知错误");

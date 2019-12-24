@@ -1,3 +1,4 @@
+<%@page import="java.net.URLDecoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE>
 <html>
@@ -8,7 +9,9 @@
 <link href="/public/css/cms.css" rel="stylesheet">
 <link href="/public/css/index.css" rel="stylesheet">
 </head>
+
 <body>
+
 	<nav class="nav justify-content-start" style="background-color: #222;">
 		<a class="nav-link navbar-brand" href="#">
 			<img src="https://v4.bootcss.com/docs/4.3/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="">
@@ -22,17 +25,14 @@
 			</div>
 			<form id="loginForm">
 			  <div class="form-group">
-			    <input type="text" id="username" name="username" class="form-control" placeholder="请输入用户名...">
+			    <input type="text" id="username" name="username" class="form-control" placeholder="请输入用户名..." >
 			    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
 			  </div>
 			  <div class="form-group">
 			    <!-- <label for="exampleInputPassword1">密码</label> -->
-			    <input type="password" id="password" name="password" class="form-control"  placeholder="请输入密码...">
+			    <input type="password" id="password" name="password" class="form-control"  placeholder="请输入密码..." >
 			  </div>
-			  <div class="form-group form-check">
-			    <input type="checkbox" class="form-check-input" value="1" id="isMima" name="isMima">
-			    <label class="form-check-label" for="exampleCheck1">记住密码</label>
-			  </div>
+			
 			  <button type="button" class="btn btn-primary" onclick="login();">登录</button>
 			  <label for="exampleInputPassword1">没有帐号，去<a href="/user/register">注册</a></label>
 			</form>
