@@ -120,4 +120,10 @@ public class ArticleServiceImpl implements ArticleService {
 		articleDao.addTousu(id);
 	}
 
+	@Override
+	public List<Article> toulist() {
+		// TODO Auto-generated method stub
+		return articleDao.toulist();
+	}
+
 }

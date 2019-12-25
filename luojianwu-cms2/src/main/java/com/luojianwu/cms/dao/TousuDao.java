@@ -4,8 +4,12 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.luojianwu.cms.pojo.Article;
 import com.luojianwu.cms.pojo.Comment;
+import com.luojianwu.cms.pojo.Complain;
+import com.luojianwu.cms.pojo.Condation;
 import com.luojianwu.cms.pojo.Tousu;
+import com.luojianwu.cms.pojo.User;
 
 public interface TousuDao {
 	/**
@@ -71,4 +75,11 @@ public interface TousuDao {
 	 * @throws
 	 */
 	int deleteByIds(@Param("ids") String ids);
+	int addComplain(Complain complain);
+	Article queryUser(@Param("article_id")Integer article_id);
+	void updatearticle(@Param("article_id")Integer article_id);
+	
+	List<Complain> list(@Param("con")Condation con);
+	List<Complain> xiangqing(@Param("con")Condation con,@Param("aid")String aid);
+	void changejinzhi(@Param("id")String id);
 }

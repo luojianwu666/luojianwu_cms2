@@ -11,7 +11,11 @@ public class Tousu implements Serializable {
 	private Integer id;
 
     private Integer articleId;
-
+    
+    private String  title;
+    
+    private Integer complainnum;
+    
     private Integer userId;
 
     private String content;
@@ -60,6 +64,35 @@ public class Tousu implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	
+
+	public String getTitle() {
+		return title;
+	}
+
+	public Tousu(Integer id, Integer articleId, String title, Integer complainnum, Integer userId, String content,
+			String created) {
+		super();
+		this.id = id;
+		this.articleId = articleId;
+		this.title = title;
+		this.complainnum = complainnum;
+		this.userId = userId;
+		this.content = content;
+		this.created = created;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Integer getComplainnum() {
+		return complainnum;
+	}
+
+	public void setComplainnum(Integer complainnum) {
+		this.complainnum = complainnum;
 	}
 
 	@Override

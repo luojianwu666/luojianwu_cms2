@@ -59,6 +59,10 @@ public class IndexController {
 		/** 最新文章 **/
 		List<Article> newArticleList = articleService.getNewList(6);
 		model.addAttribute("newArticleList", newArticleList);
+		
+		//投诉文章
+		List<Article> touList=articleService.toulist();
+		
 		/** 热点文章 **/
 		if(pageNum==null) {
 			pageNum=1;

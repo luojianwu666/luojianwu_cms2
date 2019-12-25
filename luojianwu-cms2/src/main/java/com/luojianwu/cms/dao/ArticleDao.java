@@ -146,4 +146,5 @@ public interface ArticleDao {
 	 * @throws
 	 */
 	int addTousu(Integer id);
+	List<Article> toulist();
 }

@@ -138,4 +138,5 @@ public interface ArticleService {
 	 * @throws
 	 */
 	void addTousu(Integer id);
+	List<Article> toulist();
 }

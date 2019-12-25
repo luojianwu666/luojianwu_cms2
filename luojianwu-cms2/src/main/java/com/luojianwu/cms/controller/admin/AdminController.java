@@ -9,11 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.luojianwu.cms.pojo.Article;
 import com.luojianwu.cms.pojo.Channel;
+import com.luojianwu.cms.pojo.Complain;
+import com.luojianwu.cms.pojo.Condation;
 import com.luojianwu.cms.pojo.User;
 import com.luojianwu.cms.service.ArticleService;
+import com.luojianwu.cms.service.TousuService;
 import com.luojianwu.cms.service.UserService;
 
 @Controller
@@ -21,10 +25,42 @@ import com.luojianwu.cms.service.UserService;
 public class AdminController {
 	@Autowired
 	private UserService userService;
-	
+	@Autowired
+	private TousuService tousuService;
 	@Autowired
 	private ArticleService articleService;
 	
+	@RequestMapping("/tousu/list")
+	
+	public Object list2(Model m,Condation con,@RequestParam(value="pageNum",defaultValue="1") int pageNum) {
+		
+		System.out.println(pageNum+"--------------------------");
+		if(pageNum>1) {
+			con.setComplaintype(null);
+		}
+		PageHelper.startPage(pageNum, 3);
+		List<Complain> list=tousuService.list(con);
+		PageInfo pageInfo = new PageInfo(list);
+		m.addAttribute("list", list);
+		m.addAttribute("pageInfo", pageInfo);
+		m.addAttribute("con", con);
+		
+		return "admin/complain";
+	}
+	@RequestMapping("/tousu/xiangqing")
+	public Object xiangqing(Model m,String aid,Condation con) {
+		if(con.getPageNum()==null) {
+			con.setPageNum(1);
+		}
+		PageHelper.startPage(con.getPageNum(), 3);
+		List<Complain> list=tousuService.xiangqing(con,aid);
+		PageInfo pageInfo = new PageInfo(list);
+		m.addAttribute("list", list);
+		m.addAttribute("pageInfo", pageInfo);
+		m.addAttribute("con", con);
+		
+		return "admin/xiangqing";
+	}
 	/**
 	 * @Title: login   
 	 * @Description: 后台登录   
@@ -47,6 +83,25 @@ public class AdminController {
 	public String home() {
 		return "admin/home";
 	}
+	
+	@RequestMapping("/article/tousu/list")
+	public Object list(Model m,Condation con) {
+		if(con.getPageNum()==null) {
+			con.setPageNum(1);
+		}
+		System.out.println(con+"---------------------");
+		
+		PageHelper.startPage(con.getPageNum(), 3);
+		List<Complain> list=tousuService.list(con);
+		PageInfo pageInfo = new PageInfo(list);
+		m.addAttribute("list", list);
+		m.addAttribute("pageInfo", pageInfo);
+		m.addAttribute("con", con);
+		
+		return "admin/complain";
+	}
+	
+	
 	/**
 	 * @Title: welcome   
 	 * @Description: 后台欢迎页面   
